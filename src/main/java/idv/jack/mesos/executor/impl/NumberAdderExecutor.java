@@ -63,6 +63,9 @@ public class NumberAdderExecutor implements Executor {
 				status = Protos.TaskStatus.newBuilder()
 									.setTaskId(task.getTaskId())
 									.setState(Protos.TaskState.TASK_FINISHED)
+									.setMessage(String.valueOf(total))
+									//.setData(ByteString.copyFrom(Double.toString(1).getBytes()))
+									//.setData(ByteString.copyFromUtf8(String.valueOf(total)))
 									///.setData(ByteString.copyFrom(Integer.toString(total).getBytes()))
 									.build();
 				driver.sendStatusUpdate(status);

@@ -93,6 +93,8 @@ public class PrinterSchedulerState implements Scheduler{
 		System.out.println("Status update: task " + taskStatus.getTaskId().getValue() + " state is " + taskStatus.getState());
 		if(taskStatus.getState().equals(Protos.TaskState.TASK_FINISHED)){
 			tasksCompleted++;
+			int taskResult = Integer.parseInt(taskStatus.getMessage());
+			this.totalResult += taskResult;
 			//int taskResult = Integer.parseInt(taskStatus.getData().toStringUtf8());
 			///this.totalResult += taskResult;
 			System.out.println("Task " + taskStatus.getTaskId().getValue() + " finished with area " + taskStatus.getMessage());

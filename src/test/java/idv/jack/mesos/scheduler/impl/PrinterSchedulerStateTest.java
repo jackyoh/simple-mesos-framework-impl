@@ -20,7 +20,7 @@ public class PrinterSchedulerStateTest {
 	@Test
 	public void test2(){
 		int total = 0;
-		for(int i = 801 ; i <= 900 ; i++){
+		for(int i = 1 ; i <= 1000 ; i++){
 			total += i;
 		}
 		System.out.println(total);
