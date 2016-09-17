@@ -136,7 +136,7 @@ public class PrinterSchedulerState implements Scheduler{
 	}
 	
 	private Protos.CommandInfo.Builder createCommand(String args) {
-		return Protos.CommandInfo.newBuilder().setValue("java -cp /xxx.jar" + args);//TODO
+		return Protos.CommandInfo.newBuilder().setValue("java -cp /mesos-0.28.2-shaded-protobuf.jar idv.jack.mesos.executor.impl.NumberAdderExecutor " + args);//TODO
 	}
 
 }
