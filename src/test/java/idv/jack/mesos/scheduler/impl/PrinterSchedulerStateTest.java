@@ -17,5 +17,13 @@ public class PrinterSchedulerStateTest {
 			count++;
 		}
 	}
+	@Test
+	public void test2(){
+		int total = 0;
+		for(int i = 801 ; i <= 900 ; i++){
+			total += i;
+		}
+		System.out.println(total);
+	}
 
 }

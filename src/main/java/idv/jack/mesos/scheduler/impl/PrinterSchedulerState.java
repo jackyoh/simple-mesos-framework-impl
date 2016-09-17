@@ -57,7 +57,7 @@ public class PrinterSchedulerState implements Scheduler{
 				tasksSubmitted++;
 				String task = tasks.remove();
 				Protos.TaskID taskID = Protos.TaskID.newBuilder().setValue(String.valueOf(tasksSubmitted)).build();
-				System.out.println("lAUNCHING TASK " + taskID.getValue() + " on slave " + offer.getSlaveId().getValue() + " with " + task);
+				System.out.println("LAUNCHING TASK " + taskID.getValue() + " on slave " + offer.getSlaveId().getValue() + " with " + task);
 				Protos.ExecutorInfo executor = Protos.ExecutorInfo.newBuilder()
 											.setExecutorId(Protos.ExecutorID.newBuilder().setValue(String.valueOf(tasksSubmitted)))
 											.setCommand(createCommand(task))
@@ -66,6 +66,7 @@ public class PrinterSchedulerState implements Scheduler{
 				
 				Protos.TaskInfo taskInfo = Protos.TaskInfo.newBuilder()
 						.setName("Add Number Task-" + taskID.getValue())
+						.setTaskId(taskID)
 						.setExecutor(Protos.ExecutorInfo.newBuilder(executor))
 						.addResources(Protos.Resource.newBuilder().setName("cpus").setType(Protos.Value.Type.SCALAR).setScalar(Protos.Value.Scalar.newBuilder().setValue(1)))
 						.addResources(Protos.Resource.newBuilder().setName("mem").setType(Protos.Value.Type.SCALAR).setScalar(Protos.Value.Scalar.newBuilder().setValue(128)))
@@ -92,8 +93,8 @@ public class PrinterSchedulerState implements Scheduler{
 		System.out.println("Status update: task " + taskStatus.getTaskId().getValue() + " state is " + taskStatus.getState());
 		if(taskStatus.getState().equals(Protos.TaskState.TASK_FINISHED)){
 			tasksCompleted++;
-			int taskResult = Integer.parseInt(taskStatus.getData().toStringUtf8());
-			this.totalResult += taskResult;
+			//int taskResult = Integer.parseInt(taskStatus.getData().toStringUtf8());
+			///this.totalResult += taskResult;
 			System.out.println("Task " + taskStatus.getTaskId().getValue() + " finished with area " + taskStatus.getMessage());
 		}else{
 			System.out.println("Task " + taskStatus.getTaskId().getValue() + " has message " + taskStatus.getMessage());
@@ -136,7 +137,8 @@ public class PrinterSchedulerState implements Scheduler{
 	}
 	
 	private Protos.CommandInfo.Builder createCommand(String args) {
-		return Protos.CommandInfo.newBuilder().setValue("java -cp /mesos-0.28.2-shaded-protobuf.jar idv.jack.mesos.executor.impl.NumberAdderExecutor " + args);//TODO
+		//
+		return Protos.CommandInfo.newBuilder().setValue("/jdk1.7.0_80/bin/java -cp /mesos-0.28.2-shaded-protobuf.jar:/simple-mesos-framework-impl.jar:/protobuf-java-2.5.0.jar idv.jack.mesos.executor.impl.NumberAdderExecutor " + args);//TODO
 	}
 
 }
