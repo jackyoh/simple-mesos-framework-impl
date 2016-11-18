@@ -1,9 +1,9 @@
 package idv.jack.mesos.scheduler.impl;
 
-import org.junit.Test;
+
 
 public class PrinterSchedulerStateTest {
-	@Test
+	/*@Test
 	public void test1(){
 		int startValue = 1;
 		int endValue = 1000;
@@ -24,6 +24,6 @@ public class PrinterSchedulerStateTest {
 			total += i;
 		}
 		System.out.println(total);
-	}
+	}*/
 
 }
