@@ -4,20 +4,24 @@ import static org.apache.mesos.Protos.FrameworkInfo.Capability.Type.REVOCABLE_RE
 
 import org.apache.mesos.MesosSchedulerDriver;
 import org.apache.mesos.Protos;
+import org.apache.mesos.Scheduler;
+import org.apache.mesos.SchedulerDriver;
 
-public class App {
+public class SchedulerMain {
+
 	public static void main(String args[]){
-		System.out.println("Starting the Test on Mesos with master " + args[1]);
-
 		Protos.FrameworkInfo.Builder frameworkInfoBuilder = Protos.FrameworkInfo.newBuilder();
 		frameworkInfoBuilder.addCapabilitiesBuilder().setType(REVOCABLE_RESOURCES);
 		frameworkInfoBuilder.setName("Mesos Framework Test");
-		frameworkInfoBuilder.setUser("");
 		frameworkInfoBuilder.setRole("role2");
-		
+		frameworkInfoBuilder.setUser("root");
 		Protos.FrameworkInfo frameworkInfo = frameworkInfoBuilder.build();
-		MesosSchedulerDriver schedulerDriver = new MesosSchedulerDriver(new PrinterSchedulerState(args, Integer.parseInt(args[0])), frameworkInfo, args[1]);
-		schedulerDriver.run();
+		
+		
+		Scheduler mySched = new UselessRemoteBASH(args[1]); //args[1] is running linux shell script for mesos
+		
+		SchedulerDriver driver = new MesosSchedulerDriver(mySched, frameworkInfo, args[0]);
+		driver.run();
 	}
-
+	
 }

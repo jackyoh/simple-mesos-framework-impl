@@ -40,7 +40,6 @@ public class PrinterSchedulerState implements Scheduler{
 	@Override
 	public void registered(SchedulerDriver driver, FrameworkID frameworkId, MasterInfo masterInfo) {
 		System.out.println("Scheduler registered with id " + frameworkId.getValue());
-		
 	}
 
 	@Override
