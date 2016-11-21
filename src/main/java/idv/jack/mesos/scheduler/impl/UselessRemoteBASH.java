@@ -11,11 +11,13 @@ import org.apache.mesos.Protos.MasterInfo;
 import org.apache.mesos.Protos.Offer;
 import org.apache.mesos.Protos.OfferID;
 import org.apache.mesos.Protos.Resource;
+import org.apache.mesos.Protos.Resource.RevocableInfo;
 import org.apache.mesos.Protos.SlaveID;
 import org.apache.mesos.Protos.TaskID;
 import org.apache.mesos.Protos.TaskInfo;
 import org.apache.mesos.Protos.TaskStatus;
 import org.apache.mesos.Protos.Value;
+import org.apache.mesos.Protos;
 import org.apache.mesos.Scheduler;
 import org.apache.mesos.SchedulerDriver;
 
@@ -102,27 +104,31 @@ public class UselessRemoteBASH implements Scheduler{
 		
 	}
 	public TaskInfo makeTask(SlaveID targetSlave){
-		double cpus = 20;
-		double mem = 1000;
-		//String command = "echo hello world";
+		double cpus = 3;
+		double mem = 100;
 		String command = "bash " + this.shellScriptPath;
 		
 		UUID uuid = UUID.randomUUID();
 		TaskID id = TaskID.newBuilder().setValue(uuid.toString()).build();
 		
+		Protos.Resource.RevocableInfo.Builder revocableInfoBuilder = Protos.Resource.RevocableInfo.newBuilder();
 		return TaskInfo.newBuilder()
 				.setName("useless_remote_bash.task " + id.getValue())
 				.setTaskId(id)
 				.addResources(Resource.newBuilder()
-											 .setName("cpus")
-											 .setType(Value.Type.SCALAR)
-											 .setScalar(Value.Scalar.newBuilder().setValue(cpus))		)
-				.addResources(Resource.newBuilder()
 											 .setName("mem")
 											 .setType(Value.Type.SCALAR)
 											 .setScalar(Value.Scalar.newBuilder().setValue(mem)))
+				.addResources(Resource.newBuilder()
+											 .setName("cpus")
+											 .setType(Value.Type.SCALAR)
+											 .setRevocable(revocableInfoBuilder)
+											 .setScalar(Value.Scalar.newBuilder().setValue(cpus)))
+											 
 				.setCommand(CommandInfo.newBuilder().setValue(command))
-				.setSlaveId(targetSlave)				   
+				
+				.setSlaveId(targetSlave)
+				
 				.build();
 	}
 }

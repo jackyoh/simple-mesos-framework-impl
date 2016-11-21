@@ -13,7 +13,7 @@ public class SchedulerMain {
 		Protos.FrameworkInfo.Builder frameworkInfoBuilder = Protos.FrameworkInfo.newBuilder();
 		frameworkInfoBuilder.addCapabilitiesBuilder().setType(REVOCABLE_RESOURCES);
 		frameworkInfoBuilder.setName("Mesos Framework Test");
-		frameworkInfoBuilder.setRole("role2");
+		//frameworkInfoBuilder.setRole("role2");
 		frameworkInfoBuilder.setUser("root");
 		Protos.FrameworkInfo frameworkInfo = frameworkInfoBuilder.build();
 		
